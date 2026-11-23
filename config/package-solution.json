@@ -1,0 +1,47 @@
+
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "test-client-side-solution",
+    "id": "6aa9a006-d574-46e2-9a31-b97cef3c3b7c",
+    "version": "1.0.0.1",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+   "webApiPermissionRequests": [
+    {
+  "resource": "Microsoft Graph",
+  "scope": "Mail.Send"
+}
+    ],
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.22.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "test description"
+      },
+      "longDescription": {
+        "default": "test description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "test Feature",
+        "description": "The feature that activates elements of the test solution.",
+        "id": "b81ba371-b92a-498b-acca-291da0ec366f",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/test.sppkg"
+  }
+}

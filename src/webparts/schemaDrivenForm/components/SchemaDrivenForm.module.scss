@@ -1,0 +1,957 @@
+// =====================================================
+// SCHEMA-DRIVEN FORM
+// PREMIUM ENTERPRISE APPLICATION THEME
+// Existing class names preserved for TSX compatibility
+// =====================================================
+
+// ---------- Theme ----------
+
+$primary: #2563eb;
+$primary-dark: #1d4ed8;
+$secondary: #475569;
+$text: #172033;
+$muted: #64748b;
+$border: #e2e8f0;
+$surface: #ffffff;
+$background: #f1f5f9;
+$danger: #dc2626;
+$success: #15803d;
+
+$transition: all 0.25s ease;
+$shadow: 0 10px 35px rgba(15, 23, 42, 0.07);
+
+// ---------- Main layout ----------
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 500px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 36px;
+
+  color: $text;
+
+  font-family: 'Segoe UI', 'Segoe UI Web (West European)',
+    -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  // Corporate background image from CDN
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239, 246, 255, 0.94),
+      rgba(248, 250, 252, 0.96)
+    ),
+    url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1920&q=85');
+
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+
+  border-radius: 16px;
+  animation: fadeIn 0.6s ease both;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+// ---------- Full screen mode ----------
+// The class "sdfFullScreen" is added to the web part
+// host element by DynamicFormWebPart.ts when the
+// "Run in full screen" property is on (view mode only).
+
+:global(.sdfFullScreen) .container {
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  border-radius: 0;
+}
+
+// ---------- Form ----------
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  padding: 30px;
+
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+
+  box-shadow: 0 15px 45px rgba(15, 23, 42, 0.09);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition: $transition;
+}
+
+// ---------- Title ----------
+
+.title {
+  position: relative;
+
+  margin: 0 0 22px;
+  padding: 0 0 18px 16px;
+
+  color: #172554;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+
+  border-bottom: 1px solid $border;
+
+  &::before {
+    content: '';
+    position: absolute;
+
+    left: 0;
+    top: 2px;
+
+    width: 5px;
+    height: 32px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+      180deg,
+      #3b82f6,
+      #6366f1
+    );
+  }
+}
+
+// ---------- Responsive field layout ----------
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 28px;
+  row-gap: 22px;
+
+  width: 100%;
+}
+
+.field {
+  min-width: 0;
+  margin: 0 0 18px;
+
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.fieldFullWidth {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+// ---------- Labels ----------
+
+.label {
+  display: block;
+
+  margin: 0 0 8px;
+
+  color: #334155;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 20px;
+
+  letter-spacing: 0.15px;
+}
+
+.required {
+  margin-left: 4px;
+  color: $danger;
+  font-weight: 700;
+}
+
+.help {
+  margin: 0 0 9px;
+
+  color: $muted;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+// ---------- Input controls ----------
+
+.control {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+
+  padding: 10px 13px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: $text;
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 21px;
+
+  outline: none;
+
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.025);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.2s ease;
+
+  &::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+  }
+
+  &:hover {
+    border-color: #93c5fd;
+    background-color: #fcfdff;
+  }
+
+  &:focus {
+    border-color: $primary;
+
+    background: #ffffff;
+
+    box-shadow:
+      0 0 0 3px rgba(37, 99, 235, 0.13),
+      0 3px 10px rgba(37, 99, 235, 0.06);
+
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+    color: #94a3b8;
+    cursor: not-allowed;
+  }
+
+  &:invalid {
+    box-shadow: none;
+  }
+}
+
+textarea.control {
+  min-height: 115px;
+  resize: vertical;
+}
+
+select.control:not([multiple]) {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding-right: 38px;
+
+  cursor: pointer;
+
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23475569' d='M1.4 0L6 4.6 10.6 0 12 1.4l-6 6-6-6z'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 8px;
+}
+
+select.control[multiple] {
+  min-height: 120px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.control:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+// ---------- Radio and checkbox ----------
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0 0 12px;
+
+  padding: 9px 12px;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  color: #334155;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition: $transition;
+
+  &:hover {
+    background: #eff6ff;
+    border-color: #dbeafe;
+  }
+
+  input {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+
+    margin: 0;
+
+    accent-color: $primary;
+    cursor: pointer;
+  }
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 10px 0;
+  padding: 8px 10px;
+
+  color: #334155;
+  border-radius: 7px;
+
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    background: #eff6ff;
+  }
+
+  input {
+    width: 17px;
+    height: 17px;
+
+    margin: 0;
+
+    accent-color: $primary;
+  }
+}
+
+// ---------- Nested object sections ----------
+
+.objectGroup {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 22px;
+  padding: 24px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f8fbff,
+      #ffffff
+    );
+
+  box-shadow: 0 3px 12px rgba(37, 99, 235, 0.035);
+
+  transition: $transition;
+
+  &:hover {
+    border-color: #bfdbfe;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.06);
+  }
+
+  > .field:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.objectLegend {
+  padding: 0 10px;
+
+  color: #1e40af;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+// ---------- Array items ----------
+
+.arrayItem {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 16px;
+  padding: 20px;
+
+  border: 1px solid $border;
+  border-left: 4px solid $primary;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.035);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    border-color: #bfdbfe;
+
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.07);
+  }
+}
+
+.arrayItem:last-child {
+  margin-bottom: 16px;
+}
+
+// ---------- Remove button ----------
+
+.removeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+
+  margin-top: 8px;
+  padding: 6px 13px;
+
+  border: 1px solid #fecaca;
+  border-radius: 7px;
+
+  background: #fff7f7;
+  color: #dc2626;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: $transition;
+
+  &:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.16);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+}
+
+// ---------- File upload ----------
+
+.field input[type='file'] {
+  display: block;
+
+  width: 100%;
+  min-height: 48px;
+
+  padding: 10px;
+
+  border: 1px dashed #93c5fd;
+  border-radius: 9px;
+
+  background: #f8fbff;
+  color: #475569;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: $transition;
+
+  &:hover {
+    border-color: $primary;
+    background: #eff6ff;
+  }
+
+  &:focus {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+
+  &::file-selector-button {
+    margin-right: 12px;
+    padding: 7px 13px;
+
+    border: 0;
+    border-radius: 6px;
+
+    background: #dbeafe;
+    color: #1d4ed8;
+
+    font-family: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: $transition;
+
+    &:hover {
+      background: #bfdbfe;
+    }
+  }
+}
+
+// ---------- Date range ----------
+
+.dateRange {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+
+  .control {
+    flex: 1 1 160px;
+    width: auto;
+  }
+}
+
+// ---------- Rating ----------
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.ratingButton,
+.ratingSelected {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #334155;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: $transition;
+
+  &:hover {
+    border-color: $primary;
+    background: #eff6ff;
+    color: $primary;
+
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+}
+
+.ratingSelected {
+  border-color: $primary;
+  background: $primary;
+  color: #ffffff;
+
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+
+  &:hover {
+    border-color: $primary-dark;
+    background: $primary-dark;
+    color: #ffffff;
+  }
+}
+
+// ---------- Form actions ----------
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  width: 100%;
+
+  margin-top: 14px;
+  padding-top: 22px;
+
+  border-top: 1px solid $border;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 125px;
+  min-height: 44px;
+
+  padding: 9px 23px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:focus-visible {
+    outline: 2px solid #334155;
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.primaryButton {
+  border: 1px solid $primary;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5
+  );
+
+  color: #ffffff;
+
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(
+      135deg,
+      #1d4ed8,
+      #4338ca
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 7px 18px rgba(37, 99, 235, 0.28);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+.secondaryButton {
+  border: 1px solid #cbd5e1;
+
+  background: #ffffff;
+  color: #334155;
+
+  &:hover:not(:disabled) {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+
+    transform: translateY(-1px);
+  }
+}
+
+// ---------- Validation errors ----------
+
+.error {
+  margin: 12px 0;
+  padding: 15px 17px;
+
+  border: 1px solid #fecaca;
+  border-left: 4px solid #dc2626;
+
+  border-radius: 9px;
+
+  background: #fef2f2;
+  color: #b91c1c;
+
+  font-size: 13px;
+
+  animation: fadeIn 0.3s ease;
+
+  ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+  }
+
+  li {
+    margin: 4px 0;
+  }
+}
+
+// ---------- Success ----------
+
+.success {
+  margin: 14px 0;
+  padding: 17px;
+
+  border: 1px solid #bbf7d0;
+  border-left: 4px solid #16a34a;
+
+  border-radius: 9px;
+
+  background: #f0fdf4;
+  color: #166534;
+
+  font-size: 13px;
+
+  animation: fadeIn 0.35s ease;
+
+  p {
+    margin: 4px 0;
+  }
+
+  a {
+    color: #15803d;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+}
+
+// ---------- Loading ----------
+
+.loading {
+  padding: 45px 20px;
+
+  color: $muted;
+
+  text-align: center;
+  font-size: 14px;
+
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+// ---------- Empty state ----------
+
+.emptyState {
+  padding: 35px 24px;
+
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+
+  background: #f8fafc;
+  color: $muted;
+
+  text-align: center;
+
+  transition: $transition;
+
+  &:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+  }
+}
+
+// ---------- People Picker ----------
+
+.peoplePicker {
+  width: 100%;
+  min-width: 0;
+
+  // Fluent UI People Picker support
+  :global(.ms-BasePicker) {
+    width: 100%;
+    min-height: 44px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    transition: $transition;
+
+    &:hover {
+      border-color: #93c5fd;
+    }
+
+    &.is-focused {
+      border-color: $primary;
+
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.13);
+    }
+  }
+
+  :global(.ms-BasePicker-text) {
+    min-height: 42px;
+    border: 0;
+    background: transparent;
+  }
+}
+
+// ---------- Animations ----------
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+}
+
+// ---------- Responsive ----------
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding: 22px;
+  }
+
+  .form {
+    padding: 24px;
+  }
+
+  .formGrid {
+    column-gap: 18px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 15px;
+    background-attachment: scroll;
+  }
+
+  .form {
+    padding: 20px;
+    gap: 17px;
+  }
+
+  .formGrid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 14px;
+  }
+
+  .fieldFullWidth {
+    grid-column: auto;
+  }
+
+  .objectGroup {
+    padding: 17px;
+  }
+
+  .title {
+    font-size: 23px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .form {
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .title {
+    font-size: 21px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+
+  .dateRange {
+    flex-direction: column;
+    align-items: stretch;
+
+    .control {
+      width: 100%;
+    }
+  }
+
+  .arrayItem {
+    padding: 14px;
+  }
+
+  .objectGroup {
+    padding: 13px;
+  }
+}
+
+// ---------- Accessibility ----------
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

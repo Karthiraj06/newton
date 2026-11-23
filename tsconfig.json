@@ -1,0 +1,15 @@
+{
+  "extends": "./node_modules/@microsoft/spfx-web-build-rig/profiles/default/tsconfig-base.json",
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "lib": ["es2018", "dom"],
+     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+    
+  },
+  "watchOptions": {
+    "excludeDirectories": ["**/teams", "**/temp/copilot"]
+  }
+}
+
