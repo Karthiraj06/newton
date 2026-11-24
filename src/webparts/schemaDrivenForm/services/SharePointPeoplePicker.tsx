@@ -232,7 +232,7 @@ const SharePointPeoplePicker: React.FC<ISharePointPeoplePickerProps> = (props) =
     };
   }, []);
 
-  React.useEffect(() => {
+React.useEffect(() => {
     const handler = (e: MouseEvent): void => {
       if (
         containerRef.current &&
@@ -248,7 +248,6 @@ const SharePointPeoplePicker: React.FC<ISharePointPeoplePickerProps> = (props) =
       document.removeEventListener('mousedown', handler);
     };
   }, []);
-
   // --------------------------------------------------
   // SharePoint calls
   // --------------------------------------------------
