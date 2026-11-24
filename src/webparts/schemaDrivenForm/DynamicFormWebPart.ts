@@ -73,6 +73,10 @@ export default class DynamicFormWebPart extends BaseClientSideWebPart<ISchemaDri
   private loadingLibraries = false;
   private loadingFiles = false;
 
+  // Tracks whether this web part has applied its own full-screen styles.
+  // Prevents layout-affecting style writes on every render.
+  private fullScreenApplied = false;
+
   // --------------------------------------------------
   // Initialize
   // Nothing is loaded here, so visitors with view-only
@@ -108,32 +112,47 @@ export default class DynamicFormWebPart extends BaseClientSideWebPart<ISchemaDri
   // --------------------------------------------------
 
   private applyFullScreen(): void {
-    window.requestAnimationFrame(() => {
-      const el = this.domElement;
+    const el = this.domElement;
 
-      if (!el) {
-        return;
-      }
+    if (!el) {
+      return;
+    }
 
-      const enabled =
-        !!this.properties.fullScreen &&
-        this.displayMode === DisplayMode.Read;
+    // Never apply full-screen positioning while the page is being edited.
+    const shouldApply =
+      this.properties.fullScreen === true &&
+      this.displayMode === DisplayMode.Read;
 
-      if (enabled) {
-        el.classList.add('sdfFullScreen');
-        el.style.position = 'fixed';
-        el.style.top = '0';
-        el.style.left = '0';
-        el.style.width = '100vw';
-        el.style.height = '100vh';
-        el.style.zIndex = '1000';
-        el.style.overflow = 'auto';
-        el.style.background = '#ffffff';
-      } else {
-        el.classList.remove('sdfFullScreen');
-        el.style.cssText = '';
-      }
-    });
+    // Avoid repeatedly changing width, height and position during render.
+    if (shouldApply === this.fullScreenApplied) {
+      return;
+    }
+
+    this.fullScreenApplied = shouldApply;
+
+    if (shouldApply) {
+      el.classList.add('sdfFullScreen');
+      el.style.position = 'fixed';
+      el.style.top = '0';
+      el.style.left = '0';
+      el.style.width = '100vw';
+      el.style.height = '100vh';
+      el.style.zIndex = '1000';
+      el.style.overflow = 'auto';
+      el.style.backgroundColor = '#ffffff';
+    } else {
+      el.classList.remove('sdfFullScreen');
+
+      // Remove only styles owned by this method; do not clear cssText.
+      el.style.removeProperty('position');
+      el.style.removeProperty('top');
+      el.style.removeProperty('left');
+      el.style.removeProperty('width');
+      el.style.removeProperty('height');
+      el.style.removeProperty('z-index');
+      el.style.removeProperty('overflow');
+      el.style.removeProperty('background-color');
+    }
   }
 
   // --------------------------------------------------
@@ -426,8 +445,23 @@ export default class DynamicFormWebPart extends BaseClientSideWebPart<ISchemaDri
   // --------------------------------------------------
 
   protected onDispose(): void {
-    this.domElement.classList.remove('sdfFullScreen');
-    this.domElement.style.cssText = '';
+    const el = this.domElement;
+
+    if (el) {
+      el.classList.remove('sdfFullScreen');
+
+      // Clean up only the full-screen styles owned by this web part.
+      el.style.removeProperty('position');
+      el.style.removeProperty('top');
+      el.style.removeProperty('left');
+      el.style.removeProperty('width');
+      el.style.removeProperty('height');
+      el.style.removeProperty('z-index');
+      el.style.removeProperty('overflow');
+      el.style.removeProperty('background-color');
+    }
+
+    this.fullScreenApplied = false;
     ReactDom.unmountComponentAtNode(this.domElement);
   }
 

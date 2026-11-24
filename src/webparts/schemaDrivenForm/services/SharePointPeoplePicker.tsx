@@ -233,21 +233,26 @@ const SharePointPeoplePicker: React.FC<ISharePointPeoplePickerProps> = (props) =
   }, []);
 
 React.useEffect(() => {
-    const handler = (e: MouseEvent): void => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
+  if (!open) {
+    return undefined;
+  }
 
-    document.addEventListener('mousedown', handler);
+  const handler = (e: MouseEvent): void => {
+    const container = containerRef.current;
+    const target = e.target;
 
-    return () => {
-      document.removeEventListener('mousedown', handler);
-    };
-  }, []);
+    if (container && target instanceof Node && !container.contains(target)) {
+      setOpen(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handler);
+
+  return () => {
+    document.removeEventListener('mousedown', handler);
+  };
+}, [open]);
+
   // --------------------------------------------------
   // SharePoint calls
   // --------------------------------------------------
